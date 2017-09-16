@@ -3,12 +3,15 @@ import Drawer from "material-ui/Drawer";
 import { connect } from "react-redux";
 import { toggleDrawer } from "../actions/index";
 import { withStyles } from "material-ui/styles";
+import withWidth, { isWidthUp } from "material-ui/utils/withWidth";
+import { compose } from "recompose";
 
-const styles = {
-  drawer: {
+const styles = theme => ({
+  drawerPaper: {
     width: 250
-  }
-};
+  },
+  drawerHeader: theme.mixins.toolbar
+});
 
 class LeftDrawer extends Component {
   handleClose = () => {
@@ -17,24 +20,23 @@ class LeftDrawer extends Component {
 
   render() {
     const drawer = this.props.drawer;
+    const drawerPaper = this.props.classes.drawerPaper;
 
     return (
       <Drawer
-        type={
-          this.props.browser.greaterThan["medium"] ? "permanent" : "temporary"
-        }
+        classes={{ paper: drawerPaper }}
+        type={isWidthUp("md", this.props.width) ? "permanent" : "temporary"}
         open={drawer.open}
         onRequestClose={this.handleClose}
         onClick={this.handleClose}
       >
-        <div className={this.props.classes.drawer}>Material Admin</div>
+        <div className={this.props.classes.drawerHeader}>Material Admin</div>
       </Drawer>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  browser: state.browser,
   drawer: state.drawer
 });
 
@@ -42,6 +44,8 @@ const mapDispatchToProps = dispatch => ({
   toggleDrawer: open => dispatch(toggleDrawer(open))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(styles)(LeftDrawer)
-);
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withStyles(styles),
+  withWidth()
+)(LeftDrawer);

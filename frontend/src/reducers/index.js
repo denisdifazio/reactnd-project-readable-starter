@@ -1,5 +1,4 @@
 import { combineReducers } from "redux";
-import { responsiveStateReducer } from "redux-responsive";
 import * as types from "../actions_types/index";
 
 const drawerInitialState = {
@@ -21,6 +20,5 @@ const drawer = (state = drawerInitialState, action) => {
 };
 
 export default combineReducers({
-  browser: responsiveStateReducer,
   drawer
 });

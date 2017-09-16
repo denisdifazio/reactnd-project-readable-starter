@@ -4,7 +4,6 @@ import "typeface-roboto";
 import { Route } from "react-router-dom";
 import Header from "./Header";
 import LeftDrawer from "./LeftDrawer";
-import { connect } from "react-redux";
 
 class App extends Component {
   render() {
@@ -25,4 +24,4 @@ class App extends Component {
   }
 }
 
-export default connect()(App);
+export default App;

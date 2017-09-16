@@ -1,13 +1,16 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { withStyles } from "material-ui/styles";
+import withWidth, { isWidthUp } from "material-ui/utils/withWidth";
+import { compose } from "recompose";
+import { toggleDrawer } from "../actions/index";
+import { connect } from "react-redux";
 import AppBar from "material-ui/AppBar";
 import Toolbar from "material-ui/Toolbar";
 import Typography from "material-ui/Typography";
 import IconButton from "material-ui/IconButton";
 import MenuIcon from "material-ui-icons/Menu";
-import { withStyles } from "material-ui/styles";
-import { toggleDrawer } from "../actions/index";
-import { connect } from "react-redux";
+import Hidden from "material-ui/Hidden";
 
 const styles = {
   appBar: {
@@ -36,7 +39,7 @@ class Header extends Component {
       <AppBar
         className={this.props.classes.appBar}
         style={
-          this.props.browser.greaterThan["medium"] ? (
+          isWidthUp("md", this.props.width) ? (
             { width: `calc(100% - ${drawer.width}px)` }
           ) : (
             { width: "100%" }
@@ -44,14 +47,16 @@ class Header extends Component {
         }
       >
         <Toolbar>
-          <IconButton
-            className={this.props.classes.menuButton}
-            onClick={this.setToggleDrawer}
-            color="contrast"
-            aria-label="Menu"
-          >
-            <MenuIcon />
-          </IconButton>
+          <Hidden mdUp>
+            <IconButton
+              className={this.props.classes.menuButton}
+              onClick={this.setToggleDrawer}
+              color="contrast"
+              aria-label="Menu"
+            >
+              <MenuIcon />
+            </IconButton>
+          </Hidden>
           <Typography type="title" color="inherit">
             Readable
           </Typography>
@@ -62,7 +67,6 @@ class Header extends Component {
 }
 
 const mapStateToProps = state => ({
-  browser: state.browser,
   drawer: state.drawer
 });
 
@@ -70,6 +74,8 @@ const mapDispatchToProps = dispatch => ({
   toggleDrawer: open => dispatch(toggleDrawer(open))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(styles)(Header)
-);
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withStyles(styles),
+  withWidth()
+)(Header);
