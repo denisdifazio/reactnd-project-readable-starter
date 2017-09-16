@@ -7,7 +7,6 @@ import { toggleDrawer } from "../actions/index";
 import { connect } from "react-redux";
 import AppBar from "material-ui/AppBar";
 import Toolbar from "material-ui/Toolbar";
-import Typography from "material-ui/Typography";
 import IconButton from "material-ui/IconButton";
 import MenuIcon from "material-ui-icons/Menu";
 import Hidden from "material-ui/Hidden";
@@ -57,9 +56,6 @@ class Header extends Component {
               <MenuIcon />
             </IconButton>
           </Hidden>
-          <Typography type="title" color="inherit">
-            Readable
-          </Typography>
         </Toolbar>
       </AppBar>
     );
