@@ -6,3 +6,10 @@ export function toggleDrawer(open) {
     open
   };
 }
+
+export function setCategory(category) {
+  return {
+    type: types.SET_CATEGORY,
+    category
+  };
+}

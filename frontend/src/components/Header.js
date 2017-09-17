@@ -1,20 +1,20 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { withStyles } from "material-ui/styles";
 import withWidth, { isWidthUp } from "material-ui/utils/withWidth";
 import { compose } from "recompose";
 import { toggleDrawer } from "../actions/index";
 import { connect } from "react-redux";
+import { capitalizeString } from "../utils/StringHelper";
 import AppBar from "material-ui/AppBar";
 import Toolbar from "material-ui/Toolbar";
 import IconButton from "material-ui/IconButton";
 import MenuIcon from "material-ui-icons/Menu";
 import Hidden from "material-ui/Hidden";
+import Typography from "material-ui/Typography";
 
 const styles = {
   appBar: {
-    overflow: "hidden",
-    position: "fixed",
+    position: "absolute",
     color: "primary"
   },
   menuButton: {
@@ -24,10 +24,6 @@ const styles = {
 };
 
 class Header extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired
-  };
-
   setToggleDrawer = () => {
     this.props.toggleDrawer(!this.props.drawer.open);
   };
@@ -56,6 +52,10 @@ class Header extends Component {
               <MenuIcon />
             </IconButton>
           </Hidden>
+          <Typography type="title" color="inherit">
+            {this.props.content.category &&
+              capitalizeString(this.props.content.category)}
+          </Typography>
         </Toolbar>
       </AppBar>
     );
@@ -63,7 +63,8 @@ class Header extends Component {
 }
 
 const mapStateToProps = state => ({
-  drawer: state.drawer
+  drawer: state.drawer,
+  content: state.content
 });
 
 const mapDispatchToProps = dispatch => ({

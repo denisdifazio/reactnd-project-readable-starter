@@ -39,7 +39,7 @@ class LeftDrawer extends Component {
         onClick={this.handleClose}
       >
         <div className={this.props.classes.drawerHeader}>
-          <Typography type="title" color="inherit">
+          <Typography type="title" color="default">
             Readable
           </Typography>
         </div>
