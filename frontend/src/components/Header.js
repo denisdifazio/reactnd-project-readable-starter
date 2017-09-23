@@ -11,6 +11,7 @@ import IconButton from "material-ui/IconButton";
 import MenuIcon from "material-ui-icons/Menu";
 import Hidden from "material-ui/Hidden";
 import Typography from "material-ui/Typography";
+import Button from "material-ui/Button";
 
 const styles = {
   appBar: {
@@ -20,6 +21,9 @@ const styles = {
   menuButton: {
     marginLeft: -20,
     marginRight: 10
+  },
+  flex: {
+    flex: 1
   }
 };
 
@@ -52,10 +56,15 @@ class Header extends Component {
               <MenuIcon />
             </IconButton>
           </Hidden>
-          <Typography type="title" color="inherit">
+          <Typography
+            className={this.props.classes.flex}
+            type="title"
+            color="inherit"
+          >
             {this.props.content.category &&
               capitalizeString(this.props.content.category)}
           </Typography>
+          <Button color="contrast">Last 24 Hours</Button>
         </Toolbar>
       </AppBar>
     );

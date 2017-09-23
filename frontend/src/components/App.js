@@ -1,10 +1,12 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { compose } from "recompose";
+import { fetchRequest, fetchCategories, fetchAllPosts } from "../actions/index";
 import "typeface-roboto";
 import { withStyles } from "material-ui/styles";
 import Header from "./Header";
 import LeftDrawer from "./LeftDrawer";
-import PostsContainer from "./PostsContainer";
-import ServerAPI from "../serverApi";
+import ContentContainer from "./ContentContainer";
 
 const styles = {
   root: {
@@ -26,7 +28,9 @@ const styles = {
 
 class App extends Component {
   componentDidMount() {
-    //ServerAPI.getCategories().then(books => this.setState({ books }));
+    this.props.fetchCategories();
+    this.props.fetchRequest();
+    this.props.fetchAllPosts();
   }
 
   render() {
@@ -35,11 +39,24 @@ class App extends Component {
         <div className={this.props.classes.appFrame}>
           <Header />
           <LeftDrawer />
-          <PostsContainer />
+          <ContentContainer />
         </div>
       </div>
     );
   }
 }
 
-export default withStyles(styles)(App);
+const mapStateToProps = state => ({
+  router: state.router
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchRequest: () => dispatch(fetchRequest()),
+  fetchCategories: () => dispatch(fetchCategories()),
+  fetchAllPosts: () => dispatch(fetchAllPosts())
+});
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withStyles(styles)
+)(App);

@@ -22,9 +22,7 @@ export const getCategories = () =>
     .then(data => data.categories);
 
 export const getAllPosts = () =>
-  fetch(`${api}/posts`, { headers })
-    .then(res => res.json())
-    .then(data => data.posts);
+  fetch(`${api}/posts`, { headers }).then(res => res.json());
 
 export const update = (book, shelf) =>
   fetch(`${api}/books/${book.id}`, {

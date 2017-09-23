@@ -8,7 +8,7 @@ class CategoryList extends Component {
     return (
       <List>
         {this.props.categories.map(category => (
-          <CategoryListItem key={category} name={category} />
+          <CategoryListItem key={category.name} name={category.name} />
         ))}
       </List>
     );

@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { compose } from "recompose";
 import { withStyles } from "material-ui/styles";
-import { setCategory } from "../actions/index";
 import { push } from "react-router-redux";
 import { capitalizeString } from "../utils/StringHelper";
 import { indigo } from "material-ui/colors";
@@ -38,7 +37,6 @@ class CategoryListItem extends Component {
 
   changeCategory = () => {
     this.props.setPage(this.props.name);
-    this.props.setCategory(this.props.name);
   };
 
   render() {
@@ -74,7 +72,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setCategory: category => dispatch(setCategory(category)),
   setPage: page => dispatch(push(`/${page}`))
 });
 

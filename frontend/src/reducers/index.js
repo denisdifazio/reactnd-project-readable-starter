@@ -3,12 +3,13 @@ import * as types from "../actions_types/index";
 import { routerReducer } from "react-router-redux";
 
 const drawerInitialState = {
-  open: true,
-  width: 250
+  open: true
 };
 
 const contentInitialState = {
-  categories: ["top"]
+  isFetching: false,
+  categories: [{ name: "top", path: "top" }],
+  posts: []
 };
 
 const drawer = (state = drawerInitialState, action) => {
@@ -26,10 +27,24 @@ const drawer = (state = drawerInitialState, action) => {
 
 const content = (state = contentInitialState, action) => {
   switch (action.type) {
-    case types.SET_CATEGORY:
+    case types.FETCH_REQUEST:
       return {
         ...state,
-        category: action.category
+        isFetching: true
+      };
+
+    case types.SET_CATEGORIES:
+      return {
+        ...state,
+        categories: [{ name: "top", path: "top" }].concat(action.categories),
+        isFetching: false
+      };
+
+    case types.SET_POSTS:
+      return {
+        ...state,
+        posts: action.posts,
+        isFetching: false
       };
 
     default:
