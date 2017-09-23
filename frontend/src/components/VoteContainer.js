@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { withStyles } from "material-ui/styles";
 import { intToString } from "../utils/StringHelper";
 import Typography from "material-ui/Typography";
@@ -17,14 +18,20 @@ const styles = {
 };
 
 class VoteContainer extends Component {
+  static propTypes = {
+    voteUp: PropTypes.func.isRequired,
+    voteDown: PropTypes.func.isRequired,
+    voteScore: PropTypes.number.isRequired
+  };
+
   render() {
     return (
       <div className={this.props.classes.voteContainer}>
-        <IconButton>
+        <IconButton onClick={this.props.voteUp}>
           <ArrowUp />
         </IconButton>
         <Typography>{intToString(this.props.voteScore)}</Typography>
-        <IconButton>
+        <IconButton onClick={this.props.voteDown}>
           <ArrowDown />
         </IconButton>
       </div>

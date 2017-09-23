@@ -20,13 +20,13 @@ export function timeSince(timeStamp) {
   const dateTimeStamp = new Date(timeStamp);
   let secondsPast = (date.getTime() - dateTimeStamp.getTime()) / 1000;
   if (secondsPast < 60) {
-    return parseInt(secondsPast) + "seconds ago";
+    return parseInt(secondsPast, 10) + "seconds ago";
   }
   if (secondsPast < 3600) {
-    return parseInt(secondsPast / 60) + "minutes ago";
+    return parseInt(secondsPast / 60, 10) + "minutes ago";
   }
   if (secondsPast <= 86400) {
-    return parseInt(secondsPast / 3600) + "hours ago";
+    return parseInt(secondsPast / 3600, 10) + "hours ago";
   }
   if (secondsPast > 86400) {
     const day = dateTimeStamp.getDate();
@@ -35,7 +35,7 @@ export function timeSince(timeStamp) {
       .match(/ [a-zA-Z]*/)[0]
       .replace(" ", "");
     const year =
-      dateTimeStamp.getFullYear() == date.getFullYear()
+      dateTimeStamp.getFullYear() === date.getFullYear()
         ? ""
         : " " + dateTimeStamp.getFullYear();
     return day + " " + month + year;

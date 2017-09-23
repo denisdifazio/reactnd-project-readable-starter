@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import withWidth, { isWidthUp } from "material-ui/utils/withWidth";
+import { fetchVotePost } from "../actions/index";
+import { connect } from "react-redux";
 import { withStyles } from "material-ui/styles";
 import {
   intToString,
@@ -36,6 +38,14 @@ const styles = theme => ({
 });
 
 class PostCard extends Component {
+  voteUp = () => {
+    this.props.votePost(this.props.id, "upVote");
+  };
+
+  voteDown = () => {
+    this.props.votePost(this.props.id, "downVote");
+  };
+
   render() {
     const {
       author,
@@ -49,7 +59,11 @@ class PostCard extends Component {
     } = this.props;
 
     return (
-      <ContentCard voteScore={voteScore}>
+      <ContentCard
+        voteUp={this.voteUp}
+        voteDown={this.voteDown}
+        voteScore={voteScore}
+      >
         <CardHeader
           classes={{
             root: this.props.classes.cardHeaderRoot,
@@ -84,4 +98,16 @@ class PostCard extends Component {
   }
 }
 
-export default compose(withStyles(styles), withWidth())(PostCard);
+const mapStateToProps = state => ({
+  content: state.content
+});
+
+const mapDispatchToProps = dispatch => ({
+  votePost: (id, vote) => dispatch(fetchVotePost(id, vote))
+});
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withStyles(styles),
+  withWidth()
+)(PostCard);

@@ -3,9 +3,10 @@ import { withStyles } from "material-ui/styles";
 import withWidth from "material-ui/utils/withWidth";
 import { connect } from "react-redux";
 import { compose } from "recompose";
-import Grid from "material-ui/Grid";
-import PostCard from "./PostCard";
 import { CircularProgress } from "material-ui/Progress";
+import { Route } from "react-router-dom";
+import { withRouter } from "react-router-dom";
+import PostsGrid from "./PostsGrid";
 
 const DRAWER_WIDTH = 250;
 
@@ -30,7 +31,11 @@ const styles = theme => ({
     }
   },
   progress: {
-    alignSelf: "center"
+    margin: 0,
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)"
   }
 });
 
@@ -42,13 +47,7 @@ class ContentContainer extends Component {
         {content.isFetching ? (
           <CircularProgress className={this.props.classes.progress} size={75} />
         ) : (
-          <Grid container spacing={24}>
-            {content.posts.map(post => (
-              <Grid item key={post.id} xs={12}>
-                <PostCard {...post} />
-              </Grid>
-            ))}
-          </Grid>
+          <Route exact path="/:category" component={PostsGrid} />
         )}
       </div>
     );
@@ -59,8 +58,8 @@ const mapStateToProps = state => ({
   content: state.content
 });
 
-export default compose(
-  connect(mapStateToProps),
-  withStyles(styles),
-  withWidth()
-)(ContentContainer);
+export default withRouter(
+  compose(connect(mapStateToProps), withStyles(styles), withWidth())(
+    ContentContainer
+  )
+);

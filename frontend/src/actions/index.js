@@ -34,5 +34,15 @@ export function setPosts(posts) {
   };
 }
 
+export function votePost(post) {
+  return {
+    type: types.VOTE_POST,
+    post
+  };
+}
+
 export const fetchAllPosts = () => dispatch =>
   ServerAPI.getAllPosts().then(posts => dispatch(setPosts(posts)));
+
+export const fetchVotePost = (id, vote) => dispatch =>
+  ServerAPI.votePost(id, vote).then(post => dispatch(votePost(post)));

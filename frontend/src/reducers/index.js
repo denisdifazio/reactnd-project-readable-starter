@@ -47,6 +47,17 @@ const content = (state = contentInitialState, action) => {
         isFetching: false
       };
 
+    case types.VOTE_POST:
+      return {
+        ...state,
+        posts: state.posts.map(
+          post =>
+            post.id === action.post.id
+              ? { ...post, voteScore: action.post.voteScore }
+              : post
+        )
+      };
+
     default:
       return state;
   }
