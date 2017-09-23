@@ -8,6 +8,7 @@ import Drawer from "material-ui/Drawer";
 import Divider from "material-ui/Divider";
 import CategoryList from "./CategoryList";
 import Typography from "material-ui/Typography";
+import { Route } from "react-router-dom";
 
 const styles = theme => ({
   drawerPaper: {
@@ -44,7 +45,7 @@ class LeftDrawer extends Component {
           </Typography>
         </div>
         <Divider />
-        <CategoryList />
+        <Route path="/:category?" component={CategoryList} />
       </Drawer>
     );
   }

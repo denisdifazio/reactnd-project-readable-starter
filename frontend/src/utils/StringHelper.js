@@ -1,4 +1,4 @@
-export function capitalizeString(str = "") {
+export function capitalizeString(str) {
   return typeof str !== "string" ? "" : str[0].toUpperCase() + str.slice(1);
 }
 

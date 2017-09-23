@@ -5,11 +5,11 @@ import PostCard from "./PostCard";
 
 class PostsGrid extends Component {
   render() {
-    const content = this.props.content;
+    const posts = this.props.posts;
     const category = this.props.match.params.category;
     return (
       <Grid container spacing={24}>
-        {content.posts
+        {posts
           .filter(post => post.category === category || category === "top")
           .map(post => (
             <Grid item key={post.id} xs={12}>
@@ -22,7 +22,7 @@ class PostsGrid extends Component {
 }
 
 const mapStateToProps = state => ({
-  content: state.content
+  posts: state.postsData.posts
 });
 
 export default connect(mapStateToProps)(PostsGrid);

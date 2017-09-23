@@ -24,6 +24,9 @@ export const getCategories = () =>
 export const getAllPosts = () =>
   fetch(`${api}/posts`, { headers }).then(res => res.json());
 
+export const getPostComments = id =>
+  fetch(`${api}/posts/${id}/comments`, { headers }).then(res => res.json());
+
 export const votePost = (id, option) =>
   fetch(`${api}/posts/${id}`, {
     method: "POST",

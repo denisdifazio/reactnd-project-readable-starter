@@ -7,6 +7,7 @@ import { CircularProgress } from "material-ui/Progress";
 import { Route } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import PostsGrid from "./PostsGrid";
+import PostContainer from "./PostContainer";
 
 const DRAWER_WIDTH = 250;
 
@@ -41,13 +42,15 @@ const styles = theme => ({
 
 class ContentContainer extends Component {
   render() {
-    const content = this.props.content;
     return (
       <div className={this.props.classes.content}>
-        {content.isFetching ? (
+        {this.props.postsData.isFetching ? (
           <CircularProgress className={this.props.classes.progress} size={75} />
         ) : (
-          <Route exact path="/:category" component={PostsGrid} />
+          <div>
+            <Route exact path="/:category" component={PostsGrid} />
+            <Route exact path="/:category/:id" component={PostContainer} />
+          </div>
         )}
       </div>
     );
@@ -55,7 +58,7 @@ class ContentContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  content: state.content
+  postsData: state.postsData
 });
 
 export default withRouter(

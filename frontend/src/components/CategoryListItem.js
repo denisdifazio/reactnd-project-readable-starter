@@ -5,7 +5,7 @@ import { compose } from "recompose";
 import { withStyles } from "material-ui/styles";
 import { push } from "react-router-redux";
 import { capitalizeString } from "../utils/StringHelper";
-import { indigo } from "material-ui/colors";
+import { indigo, grey } from "material-ui/colors";
 import { ListItem, ListItemIcon, ListItemText } from "material-ui/List";
 import ReactIcon from "./ReactIcon";
 import ReduxIcon from "./ReduxIcon";
@@ -18,8 +18,11 @@ const styles = theme => ({
   },
   textSeleted: {
     textAlign: "left",
-    color: indigo[500],
+    color: grey[50],
     fontWeight: "bold"
+  },
+  selectedItem: {
+    backgroundColor: indigo[500]
   }
 });
 
@@ -44,11 +47,21 @@ class CategoryListItem extends Component {
     const CategoryIcon = icons[this.props.name];
 
     return (
-      <ListItem button onClick={this.changeCategory}>
+      <ListItem
+        className={
+          pathname.includes(this.props.name) ? (
+            this.props.classes.selectedItem
+          ) : (
+            ""
+          )
+        }
+        button
+        onClick={this.changeCategory}
+      >
         <ListItemIcon>
           <CategoryIcon
             style={
-              pathname.includes(this.props.name) ? { color: indigo[500] } : {}
+              pathname.includes(this.props.name) ? { color: grey[50] } : {}
             }
           />
         </ListItemIcon>

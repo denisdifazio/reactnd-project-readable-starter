@@ -16,6 +16,7 @@ import EditIcon from "material-ui-icons/ModeEdit";
 import DeleteIcon from "material-ui-icons/Delete";
 import ContentCard from "./ContentCard";
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 const styles = theme => ({
   cardHeaderRoot: { flex: 1 },
@@ -55,7 +56,8 @@ class PostCard extends Component {
       id,
       timestamp,
       title,
-      voteScore
+      voteScore,
+      comments
     } = this.props;
 
     return (
@@ -76,16 +78,26 @@ class PostCard extends Component {
           )} by ${author} to ${capitalizeString(category)}`}
         />
         <div className={this.props.classes.contentFooterContainer}>
-          <Button
-            color="primary"
-            className={this.props.classes.contentFooterButtonsContainer}
-          >
-            {isWidthUp("sm", this.props.width) ? (
-              `${intToString(1000)} COMMENTS`
-            ) : (
-              <CommentIcon />
-            )}
-          </Button>
+          {this.props.match ? (
+            {}
+          ) : (
+            <Button
+              color="primary"
+              className={this.props.classes.contentFooterButtonsContainer}
+            >
+              <Link to={`/${category}/${id}`}>
+                {isWidthUp("sm", this.props.width) ? typeof comments !==
+                "undefined" ? (
+                  `${intToString(comments.length)} COMMENTS`
+                ) : (
+                  "0 COMMENTS"
+                ) : (
+                  <CommentIcon />
+                )}
+              </Link>
+            </Button>
+          )}
+
           <Button className={this.props.classes.contentFooterButtonsContainer}>
             {isWidthUp("sm", this.props.width) ? "EDIT" : <EditIcon />}
           </Button>
@@ -99,7 +111,7 @@ class PostCard extends Component {
 }
 
 const mapStateToProps = state => ({
-  content: state.content
+  router: state.router
 });
 
 const mapDispatchToProps = dispatch => ({

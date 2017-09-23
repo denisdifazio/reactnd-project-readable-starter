@@ -6,9 +6,13 @@ const drawerInitialState = {
   open: true
 };
 
-const contentInitialState = {
+const categoriesDataInitialState = {
   isFetching: false,
-  categories: [{ name: "top", path: "top" }],
+  categories: [{ name: "top", path: "top" }]
+};
+
+const postsDataInitialState = {
+  isFetching: true,
   posts: []
 };
 
@@ -25,7 +29,43 @@ const drawer = (state = drawerInitialState, action) => {
   }
 };
 
-const content = (state = contentInitialState, action) => {
+const postsData = (state = postsDataInitialState, action) => {
+  switch (action.type) {
+    case types.SET_POSTS:
+      return {
+        ...state,
+        isFetching: false,
+        posts: action.posts
+      };
+
+    case types.VOTE_POST_RESPONSE:
+      return {
+        ...state,
+        posts: state.posts.map(
+          post =>
+            post.id === action.post.id
+              ? { ...post, voteScore: action.post.voteScore }
+              : post
+        )
+      };
+
+    case types.SET_POST_COMMENTS:
+      return {
+        ...state,
+        posts: state.posts.map(
+          post =>
+            post.id === action.id
+              ? { ...post, comments: action.comments }
+              : post
+        )
+      };
+
+    default:
+      return state;
+  }
+};
+
+const categoriesData = (state = categoriesDataInitialState, action) => {
   switch (action.type) {
     case types.FETCH_REQUEST:
       return {
@@ -40,24 +80,6 @@ const content = (state = contentInitialState, action) => {
         isFetching: false
       };
 
-    case types.SET_POSTS:
-      return {
-        ...state,
-        posts: action.posts,
-        isFetching: false
-      };
-
-    case types.VOTE_POST:
-      return {
-        ...state,
-        posts: state.posts.map(
-          post =>
-            post.id === action.post.id
-              ? { ...post, voteScore: action.post.voteScore }
-              : post
-        )
-      };
-
     default:
       return state;
   }
@@ -66,5 +88,6 @@ const content = (state = contentInitialState, action) => {
 export default combineReducers({
   router: routerReducer,
   drawer,
-  content
+  categoriesData,
+  postsData
 });

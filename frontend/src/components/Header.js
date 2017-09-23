@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { withStyles } from "material-ui/styles";
-import withWidth, { isWidthUp } from "material-ui/utils/withWidth";
 import { compose } from "recompose";
 import { toggleDrawer } from "../actions/index";
 import { connect } from "react-redux";
@@ -13,10 +12,14 @@ import Hidden from "material-ui/Hidden";
 import Typography from "material-ui/Typography";
 import Button from "material-ui/Button";
 
-const styles = {
+const styles = theme => ({
   appBar: {
     position: "absolute",
-    color: "primary"
+    color: "primary",
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "calc(100% - 250px)"
+    }
   },
   menuButton: {
     marginLeft: -20,
@@ -25,7 +28,7 @@ const styles = {
   flex: {
     flex: 1
   }
-};
+});
 
 class Header extends Component {
   setToggleDrawer = () => {
@@ -33,18 +36,8 @@ class Header extends Component {
   };
 
   render() {
-    const drawer = this.props.drawer;
     return (
-      <AppBar
-        className={this.props.classes.appBar}
-        style={
-          isWidthUp("md", this.props.width) ? (
-            { width: `calc(100% - ${drawer.width}px)` }
-          ) : (
-            { width: "100%" }
-          )
-        }
-      >
+      <AppBar className={this.props.classes.appBar}>
         <Toolbar>
           <Hidden mdUp>
             <IconButton
@@ -61,20 +54,17 @@ class Header extends Component {
             type="title"
             color="inherit"
           >
-            {this.props.content.category &&
-              capitalizeString(this.props.content.category)}
+            {capitalizeString(this.props.match.params.category)}
           </Typography>
           <Button color="contrast">Last 24 Hours</Button>
+          <Button color="contrast">New Post</Button>
         </Toolbar>
       </AppBar>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  drawer: state.drawer,
-  content: state.content
-});
+const mapStateToProps = state => ({ drawer: state.drawer });
 
 const mapDispatchToProps = dispatch => ({
   toggleDrawer: open => dispatch(toggleDrawer(open))
@@ -82,6 +72,5 @@ const mapDispatchToProps = dispatch => ({
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  withStyles(styles),
-  withWidth()
+  withStyles(styles)
 )(Header);
