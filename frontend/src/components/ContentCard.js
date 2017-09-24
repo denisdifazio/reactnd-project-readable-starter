@@ -18,6 +18,7 @@ const styles = theme => ({
 
 class ContentCard extends Component {
   static propTypes = {
+    gridView: PropTypes.bool.isRequired,
     voteUp: PropTypes.func.isRequired,
     voteDown: PropTypes.func.isRequired,
     voteScore: PropTypes.number.isRequired
@@ -27,6 +28,7 @@ class ContentCard extends Component {
     return (
       <Card className={this.props.classes.card}>
         <VoteContainer
+          gridView={this.props.gridView}
           voteUp={this.props.voteUp}
           voteDown={this.props.voteDown}
           voteScore={this.props.voteScore}

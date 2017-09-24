@@ -58,11 +58,13 @@ class ContentContainer extends Component {
 }
 
 const mapStateToProps = state => ({
+  router: state.router,
   postsData: state.postsData
 });
 
-export default withRouter(
-  compose(connect(mapStateToProps), withStyles(styles), withWidth())(
-    ContentContainer
-  )
-);
+export default compose(
+  withRouter,
+  connect(mapStateToProps),
+  withStyles(styles),
+  withWidth()
+)(ContentContainer);

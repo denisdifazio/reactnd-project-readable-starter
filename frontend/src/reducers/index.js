@@ -3,7 +3,7 @@ import * as types from "../actions_types/index";
 import { routerReducer } from "react-router-redux";
 
 const drawerInitialState = {
-  open: true
+  open: false
 };
 
 const categoriesDataInitialState = {
@@ -49,6 +49,25 @@ const postsData = (state = postsDataInitialState, action) => {
         )
       };
 
+    case types.VOTE_COMMENT_RESPONSE:
+      return {
+        ...state,
+        posts: state.posts.map(
+          post =>
+            post.id === action.comment.parentId
+              ? {
+                  ...post,
+                  comments: post.comments.map(
+                    comment =>
+                      comment.id === action.comment.id
+                        ? { ...comment, voteScore: action.comment.voteScore }
+                        : comment
+                  )
+                }
+              : post
+        )
+      };
+
     case types.SET_POST_COMMENTS:
       return {
         ...state,
@@ -56,6 +75,20 @@ const postsData = (state = postsDataInitialState, action) => {
           post =>
             post.id === action.id
               ? { ...post, comments: action.comments }
+              : post
+        )
+      };
+
+    case types.ADD_COMMENT_RESPONSE:
+      return {
+        ...state,
+        posts: state.posts.map(
+          post =>
+            post.id === action.comment.parentId
+              ? {
+                  ...post,
+                  comments: [...post.comments, action.comment]
+                }
               : post
         )
       };

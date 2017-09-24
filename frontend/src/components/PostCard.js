@@ -3,13 +3,14 @@ import withWidth, { isWidthUp } from "material-ui/utils/withWidth";
 import { fetchVotePost } from "../actions/index";
 import { connect } from "react-redux";
 import { withStyles } from "material-ui/styles";
+import { push } from "react-router-redux";
 import {
   intToString,
   timeSince,
   capitalizeString
 } from "../utils/StringHelper";
 import { compose } from "recompose";
-import { CardHeader } from "material-ui/Card";
+import { CardHeader, CardContent } from "material-ui/Card";
 import Button from "material-ui/Button";
 import CommentIcon from "material-ui-icons/ModeComment";
 import EditIcon from "material-ui-icons/ModeEdit";
@@ -62,6 +63,7 @@ class PostCard extends Component {
 
     return (
       <ContentCard
+        gridView={this.props.gridView}
         voteUp={this.voteUp}
         voteDown={this.voteDown}
         voteScore={voteScore}
@@ -77,24 +79,22 @@ class PostCard extends Component {
             timestamp
           )} by ${author} to ${capitalizeString(category)}`}
         />
+        {!this.props.gridView && <CardContent>{body}</CardContent>}
         <div className={this.props.classes.contentFooterContainer}>
-          {this.props.match ? (
-            {}
-          ) : (
+          {this.props.gridView && (
             <Button
               color="primary"
               className={this.props.classes.contentFooterButtonsContainer}
+              onClick={() => this.props.setPage(`${category}/${id}`)}
             >
-              <Link to={`/${category}/${id}`}>
-                {isWidthUp("sm", this.props.width) ? typeof comments !==
-                "undefined" ? (
-                  `${intToString(comments.length)} COMMENTS`
-                ) : (
-                  "0 COMMENTS"
-                ) : (
-                  <CommentIcon />
-                )}
-              </Link>
+              {isWidthUp("sm", this.props.width) ? typeof comments !==
+              "undefined" ? (
+                `${intToString(comments.length)} COMMENTS`
+              ) : (
+                "0 COMMENTS"
+              ) : (
+                <CommentIcon />
+              )}
             </Button>
           )}
 
@@ -115,6 +115,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  setPage: page => dispatch(push(`/${page}`)),
   votePost: (id, vote) => dispatch(fetchVotePost(id, vote))
 });
 

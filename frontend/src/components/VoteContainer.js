@@ -6,6 +6,7 @@ import Typography from "material-ui/Typography";
 import IconButton from "material-ui/IconButton";
 import ArrowUp from "material-ui-icons/ArrowDropUp";
 import ArrowDown from "material-ui-icons/ArrowDropDown";
+import classNames from "classnames";
 
 const styles = {
   voteContainer: {
@@ -14,11 +15,15 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     padding: "10px"
+  },
+  voteContainerGridView: {
+    justifyContent: "flex-start"
   }
 };
 
 class VoteContainer extends Component {
   static propTypes = {
+    gridView: PropTypes.bool.isRequired,
     voteUp: PropTypes.func.isRequired,
     voteDown: PropTypes.func.isRequired,
     voteScore: PropTypes.number.isRequired
@@ -26,7 +31,12 @@ class VoteContainer extends Component {
 
   render() {
     return (
-      <div className={this.props.classes.voteContainer}>
+      <div
+        className={classNames(
+          this.props.classes.voteContainer,
+          !this.props.gridView && this.props.classes.voteContainerGridView
+        )}
+      >
         <IconButton onClick={this.props.voteUp}>
           <ArrowUp />
         </IconButton>

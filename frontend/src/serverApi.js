@@ -37,6 +37,26 @@ export const votePost = (id, option) =>
     body: JSON.stringify({ option })
   }).then(res => res.json());
 
+export const voteComment = (id, option) =>
+  fetch(`${api}/comments/${id}`, {
+    method: "POST",
+    headers: {
+      ...headers,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ option })
+  }).then(res => res.json());
+
+export const addComment = comment =>
+  fetch(`${api}/comments`, {
+    method: "POST",
+    headers: {
+      ...headers,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(comment)
+  }).then(res => res.json());
+
 export const update = (book, shelf) =>
   fetch(`${api}/books/${book.id}`, {
     method: "PUT",

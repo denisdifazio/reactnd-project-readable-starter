@@ -15,18 +15,30 @@ export function intToString(value) {
   return shortValue + suffixes[suffixNum];
 }
 
+export function create_UUID() {
+  var dt = new Date().getTime();
+  var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(
+    c
+  ) {
+    var r = ((dt + Math.random() * 16) % 16) | 0;
+    dt = Math.floor(dt / 16);
+    return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
+  });
+  return uuid;
+}
+
 export function timeSince(timeStamp) {
   const date = new Date();
   const dateTimeStamp = new Date(timeStamp);
   let secondsPast = (date.getTime() - dateTimeStamp.getTime()) / 1000;
   if (secondsPast < 60) {
-    return parseInt(secondsPast, 10) + "seconds ago";
+    return parseInt(secondsPast, 10) + " seconds ago";
   }
   if (secondsPast < 3600) {
-    return parseInt(secondsPast / 60, 10) + "minutes ago";
+    return parseInt(secondsPast / 60, 10) + " minutes ago";
   }
   if (secondsPast <= 86400) {
-    return parseInt(secondsPast / 3600, 10) + "hours ago";
+    return parseInt(secondsPast / 3600, 10) + " hours ago";
   }
   if (secondsPast > 86400) {
     const day = dateTimeStamp.getDate();

@@ -49,6 +49,20 @@ export function votePostResponse(post) {
   };
 }
 
+export function voteCommentResponse(comment) {
+  return {
+    type: types.VOTE_COMMENT_RESPONSE,
+    comment
+  };
+}
+
+export function addCommentResponse(comment) {
+  return {
+    type: types.ADD_COMMENT_RESPONSE,
+    comment
+  };
+}
+
 export const fetchPostComments = id => dispatch =>
   ServerAPI.getPostComments(id).then(comments =>
     dispatch(setPostComments(id, comments))
@@ -63,3 +77,13 @@ export const fetchAllPosts = () => dispatch =>
 
 export const fetchVotePost = (id, vote) => dispatch =>
   ServerAPI.votePost(id, vote).then(post => dispatch(votePostResponse(post)));
+
+export const fetchVoteComment = (id, vote) => dispatch =>
+  ServerAPI.voteComment(id, vote).then(comment =>
+    dispatch(voteCommentResponse(comment))
+  );
+
+export const fetchAddComment = comment => dispatch =>
+  ServerAPI.addComment(comment).then(comment =>
+    dispatch(addCommentResponse(comment))
+  );

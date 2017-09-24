@@ -10,10 +10,14 @@ class PostsGrid extends Component {
     return (
       <Grid container spacing={24}>
         {posts
-          .filter(post => post.category === category || category === "top")
+          .filter(
+            post =>
+              !post.deleted &&
+              (post.category === category || category === "top")
+          )
           .map(post => (
             <Grid item key={post.id} xs={12}>
-              <PostCard key={post.id} {...post} />
+              <PostCard key={post.id} {...post} gridView={true} />
             </Grid>
           ))}
       </Grid>
