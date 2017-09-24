@@ -99,6 +99,19 @@ const postsData = (state = postsDataInitialState, action) => {
         posts: [...state.posts, action.post]
       };
 
+    case types.EDIT_POST_RESPONSE:
+      return {
+        ...state,
+        posts: state.posts.map(
+          post =>
+            post.id === action.post.id
+              ? {
+                  ...action.post
+                }
+              : post
+        )
+      };
+
     default:
       return state;
   }

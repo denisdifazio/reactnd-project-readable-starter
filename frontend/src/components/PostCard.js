@@ -118,7 +118,10 @@ class PostCard extends Component {
             </Button>
           )}
 
-          <Button className={this.props.classes.contentFooterButtonsContainer}>
+          <Button
+            className={this.props.classes.contentFooterButtonsContainer}
+            onClick={() => this.props.setPage(`edit/${this.props.id}`)}
+          >
             {isWidthUp("sm", this.props.width) ? "EDIT" : <EditIcon />}
           </Button>
           <Button className={this.props.classes.contentFooterButtonsContainer}>

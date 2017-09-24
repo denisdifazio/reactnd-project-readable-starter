@@ -52,7 +52,11 @@ class ContentContainer extends Component {
         ) : (
           <div>
             <Switch>
-              <Route exact path="/new/post" component={AddEditPostContainer} />
+              <Route
+                exact
+                path="/(new|edit)/:post"
+                component={AddEditPostContainer}
+              />
               <Route exact path="/:category" component={PostsGrid} />
               <Route exact path="/:category/:id" component={PostContainer} />
             </Switch>

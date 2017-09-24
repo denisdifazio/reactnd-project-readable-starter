@@ -18,7 +18,9 @@ const styles = {
 
 class PostContainer extends Component {
   render() {
-    return (
+    return this.props.post === undefined ? (
+      <div>Post not found</div>
+    ) : (
       <div className={this.props.classes.container}>
         <PostCard {...this.props.post} gridView={false} />
         <div className={this.props.classes.commentsContainer}>

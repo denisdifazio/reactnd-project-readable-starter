@@ -71,6 +71,13 @@ export function addPostResponse(post) {
   };
 }
 
+export function editPostResponse(post) {
+  return {
+    type: types.EDIT_POST_RESPONSE,
+    post
+  };
+}
+
 export const fetchPostComments = id => dispatch =>
   ServerAPI.getPostComments(id).then(comments =>
     dispatch(setPostComments(id, comments))
@@ -100,3 +107,10 @@ export const fetchAddPost = post => dispatch =>
   ServerAPI.addPost(post)
     .then(post => dispatch(addPostResponse(post)))
     .then(action => dispatch(push(`/${post.category}/${post.id}`)));
+
+export const fetchEditPost = (id, post) => dispatch =>
+  ServerAPI.editPost(id, post)
+    .then(post => dispatch(editPostResponse(post)))
+    .then(action =>
+      dispatch(push(`/${action.post.category}/${action.post.id}`))
+    );

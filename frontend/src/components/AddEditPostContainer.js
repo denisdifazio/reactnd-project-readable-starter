@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { fetchAddPost } from "../actions/index";
+import { fetchAddPost, fetchEditPost } from "../actions/index";
 import { connect } from "react-redux";
 import { compose } from "recompose";
 import { withStyles } from "material-ui/styles";
@@ -49,6 +49,29 @@ class AddEditPostContainer extends Component {
     validate(group) && this.addPost();
   };
 
+  submitEditPost = group => {
+    validate(group) && this.editPost();
+  };
+
+  editPost = () => {
+    const post = {
+      title: this.state.title,
+      body: this.state.body
+    };
+
+    this.props.fetchEditPost(this.props.post.id, post);
+  };
+
+  componentDidMount() {
+    this.props.post !== undefined &&
+      this.setState({
+        author: this.props.post.author,
+        title: this.props.post.title,
+        category: this.props.post.category,
+        body: this.props.post.body
+      });
+  }
+
   addPost = () => {
     const post = {
       id: create_UUID(),
@@ -63,7 +86,11 @@ class AddEditPostContainer extends Component {
   };
 
   render() {
-    return (
+    const editing = this.props.match.params[0] === "edit";
+    const post = this.props.post;
+    return editing && post === undefined ? (
+      <div>Invalid post</div>
+    ) : (
       <Paper className={this.props.classes.paper}>
         <Grid container spacing={0}>
           <Grid item xs={12}>
@@ -78,6 +105,7 @@ class AddEditPostContainer extends Component {
               ]}
             >
               <TextField
+                disabled={editing}
                 required
                 id="author"
                 label="Author"
@@ -100,6 +128,7 @@ class AddEditPostContainer extends Component {
             >
               <TextField
                 required
+                multiline
                 id="title"
                 label="Title"
                 margin="normal"
@@ -119,6 +148,7 @@ class AddEditPostContainer extends Component {
               ]}
             >
               <FormControl
+                disabled={editing}
                 required
                 className={this.props.classes.formControl}
                 value={this.state.category}
@@ -159,13 +189,18 @@ class AddEditPostContainer extends Component {
                 <Button
                   raised
                   color="primary"
-                  onClick={() => this.submitPost("form")}
+                  onClick={() =>
+                    editing
+                      ? this.submitEditPost("form")
+                      : this.submitPost("form")}
                 >
-                  Post
+                  {editing ? "Edit" : "Post"}
                 </Button>
               </Grid>
               <Grid item>
-                <Button raised>Cancel</Button>
+                <Button raised onClick={() => this.props.history.goBack()}>
+                  Cancel
+                </Button>
               </Grid>
             </Grid>
           </Grid>
@@ -175,12 +210,16 @@ class AddEditPostContainer extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, ownProps) => ({
+  post: state.postsData.posts.find(
+    post => post.id === ownProps.match.params.post
+  ),
   categories: state.categoriesData.categories
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchAddPost: post => dispatch(fetchAddPost(post))
+  fetchAddPost: post => dispatch(fetchAddPost(post)),
+  fetchEditPost: (id, post) => dispatch(fetchEditPost(id, post))
 });
 
 export default compose(

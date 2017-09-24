@@ -37,6 +37,7 @@ class Header extends Component {
   };
 
   render() {
+    const category = this.props.match.params.category;
     return (
       <AppBar className={this.props.classes.appBar}>
         <Toolbar>
@@ -55,21 +56,22 @@ class Header extends Component {
             type="title"
             color="inherit"
           >
-            {this.props.match.params.category === "new" ? (
-              "New Post"
-            ) : (
-              capitalizeString(this.props.match.params.category)
-            )}
+            {category === "new" ? "New Post" : capitalizeString(category)}
           </Typography>
-          <Button color="contrast">Last 24 Hours</Button>
-          <Hidden mdDown>
-            <Button
-              onClick={() => this.props.setPage("new/post")}
-              color="contrast"
-            >
-              New Post
-            </Button>
-          </Hidden>
+          {category !== "new" &&
+          category !== "edit" && (
+            <div>
+              <Button color="contrast">Last 24 Hours</Button>
+              <Hidden mdDown>
+                <Button
+                  onClick={() => this.props.setPage("new/post")}
+                  color="contrast"
+                >
+                  New Post
+                </Button>
+              </Hidden>
+            </div>
+          )}
         </Toolbar>
       </AppBar>
     );
