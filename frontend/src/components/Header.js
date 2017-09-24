@@ -4,6 +4,7 @@ import { compose } from "recompose";
 import { toggleDrawer } from "../actions/index";
 import { connect } from "react-redux";
 import { capitalizeString } from "../utils/StringHelper";
+import { push } from "react-router-redux";
 import AppBar from "material-ui/AppBar";
 import Toolbar from "material-ui/Toolbar";
 import IconButton from "material-ui/IconButton";
@@ -54,10 +55,21 @@ class Header extends Component {
             type="title"
             color="inherit"
           >
-            {capitalizeString(this.props.match.params.category)}
+            {this.props.match.params.category === "new" ? (
+              "New Post"
+            ) : (
+              capitalizeString(this.props.match.params.category)
+            )}
           </Typography>
           <Button color="contrast">Last 24 Hours</Button>
-          <Button color="contrast">New Post</Button>
+          <Hidden mdDown>
+            <Button
+              onClick={() => this.props.setPage("new/post")}
+              color="contrast"
+            >
+              New Post
+            </Button>
+          </Hidden>
         </Toolbar>
       </AppBar>
     );
@@ -67,6 +79,7 @@ class Header extends Component {
 const mapStateToProps = state => ({ drawer: state.drawer });
 
 const mapDispatchToProps = dispatch => ({
+  setPage: page => dispatch(push(`/${page}`)),
   toggleDrawer: open => dispatch(toggleDrawer(open))
 });
 

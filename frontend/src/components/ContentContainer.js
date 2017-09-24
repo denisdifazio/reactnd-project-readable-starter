@@ -4,10 +4,13 @@ import withWidth from "material-ui/utils/withWidth";
 import { connect } from "react-redux";
 import { compose } from "recompose";
 import { CircularProgress } from "material-ui/Progress";
-import { Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import PostsGrid from "./PostsGrid";
 import PostContainer from "./PostContainer";
+import AddPostButton from "./AddPostButton";
+import Hidden from "material-ui/Hidden";
+import AddEditPostContainer from "./AddEditPostContainer";
 
 const DRAWER_WIDTH = 250;
 
@@ -48,8 +51,15 @@ class ContentContainer extends Component {
           <CircularProgress className={this.props.classes.progress} size={75} />
         ) : (
           <div>
-            <Route exact path="/:category" component={PostsGrid} />
-            <Route exact path="/:category/:id" component={PostContainer} />
+            <Switch>
+              <Route exact path="/new/post" component={AddEditPostContainer} />
+              <Route exact path="/:category" component={PostsGrid} />
+              <Route exact path="/:category/:id" component={PostContainer} />
+            </Switch>
+
+            <Hidden mdUp>
+              <Route exact path="/:category" component={AddPostButton} />
+            </Hidden>
           </div>
         )}
       </div>

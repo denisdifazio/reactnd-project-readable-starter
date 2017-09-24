@@ -5,12 +5,13 @@ import App from "./components/App";
 import { Provider } from "react-redux";
 import store, { history } from "./store/index";
 import { ConnectedRouter } from "react-router-redux";
+import { Route } from "react-router-dom";
 
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <div>
-        <App />
+        <Route path="/" component={App} />
       </div>
     </ConnectedRouter>
   </Provider>,

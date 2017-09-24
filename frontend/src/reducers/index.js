@@ -93,6 +93,12 @@ const postsData = (state = postsDataInitialState, action) => {
         )
       };
 
+    case types.ADD_POST_RESPONSE:
+      return {
+        ...state,
+        posts: [...state.posts, action.post]
+      };
+
     default:
       return state;
   }

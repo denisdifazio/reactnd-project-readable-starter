@@ -1,5 +1,6 @@
 import * as types from "../actions_types/index";
 import * as ServerAPI from "../serverApi";
+import { push } from "react-router-redux";
 
 export function toggleDrawer(open) {
   return {
@@ -63,6 +64,13 @@ export function addCommentResponse(comment) {
   };
 }
 
+export function addPostResponse(post) {
+  return {
+    type: types.ADD_POST_RESPONSE,
+    post
+  };
+}
+
 export const fetchPostComments = id => dispatch =>
   ServerAPI.getPostComments(id).then(comments =>
     dispatch(setPostComments(id, comments))
@@ -87,3 +95,8 @@ export const fetchAddComment = comment => dispatch =>
   ServerAPI.addComment(comment).then(comment =>
     dispatch(addCommentResponse(comment))
   );
+
+export const fetchAddPost = post => dispatch =>
+  ServerAPI.addPost(post)
+    .then(post => dispatch(addPostResponse(post)))
+    .then(action => dispatch(push(`/${post.category}/${post.id}`)));

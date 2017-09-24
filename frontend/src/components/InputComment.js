@@ -7,10 +7,14 @@ import { create_UUID } from "../utils/StringHelper";
 import TextField from "material-ui/TextField";
 import Paper from "material-ui/Paper";
 import Button from "material-ui/Button";
+import ValidationIn from "./ValidationIn";
+import { validate } from "../utils/ValidationHelper";
 
 const styles = {
   container: {
-    padding: 20
+    paddingLeft: 20,
+    paddingBottom: 20,
+    paddingRight: 20
   },
   button: {
     paddingTop: 20
@@ -29,6 +33,10 @@ class InputComment extends Component {
     });
   };
 
+  submitComment = group => {
+    validate(group) && this.addComment();
+  };
+
   addComment = () => {
     const comment = {
       id: create_UUID(),
@@ -44,13 +52,26 @@ class InputComment extends Component {
   render() {
     return (
       <Paper className={this.props.classes.container}>
-        <TextField
-          id="author"
-          label="Author"
-          rowsMax="4"
-          margin="normal"
-          onChange={this.handleChange("author")}
-        />
+        <ValidationIn
+          error="helperText"
+          groups={["form"]}
+          validators={[
+            {
+              rule: value => value,
+              hint: "Required"
+            }
+          ]}
+        >
+          <TextField
+            required
+            id="author"
+            label="Author"
+            rowsMax="4"
+            margin="normal"
+            onChange={this.handleChange("author")}
+            value={this.state.author}
+          />
+        </ValidationIn>
         <TextField
           id="body"
           label="Comment"
@@ -61,8 +82,12 @@ class InputComment extends Component {
           onChange={this.handleChange("body")}
         />
         <div className={this.props.classes.button}>
-          <Button raised color="primary" onClick={this.addComment}>
-            New Comment
+          <Button
+            raised
+            color="primary"
+            onClick={() => this.submitComment("form")}
+          >
+            Comment
           </Button>
         </div>
       </Paper>

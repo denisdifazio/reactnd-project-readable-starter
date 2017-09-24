@@ -18,6 +18,7 @@ import DeleteIcon from "material-ui-icons/Delete";
 import ContentCard from "./ContentCard";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
+import Typography from "material-ui/Typography";
 
 const styles = theme => ({
   cardHeaderRoot: { flex: 1 },
@@ -36,6 +37,12 @@ const styles = theme => ({
       flex: 1,
       minWidth: 0
     }
+  },
+  commentsButton: {
+    display: "flex"
+  },
+  commentButtonNumber: {
+    paddingRight: 3
   }
 });
 
@@ -93,7 +100,20 @@ class PostCard extends Component {
               ) : (
                 "0 COMMENTS"
               ) : (
-                <CommentIcon />
+                <div className={this.props.classes.commentsButton}>
+                  <Typography
+                    className={this.props.classes.commentButtonNumber}
+                    type="body2"
+                    color="inherit"
+                  >
+                    {typeof comments !== "undefined" ? (
+                      intToString(comments.length)
+                    ) : (
+                      "0"
+                    )}
+                  </Typography>
+                  <CommentIcon />
+                </div>
               )}
             </Button>
           )}
