@@ -53,7 +53,10 @@ export function addCommentResponse(comment) {
 export function addPostResponse(post) {
   return {
     type: types.ADD_POST_RESPONSE,
-    post
+    post: {
+      ...post,
+      comments: []
+    }
   };
 }
 
