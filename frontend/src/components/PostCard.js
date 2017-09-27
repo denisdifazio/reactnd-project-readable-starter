@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import withWidth, { isWidthUp } from "material-ui/utils/withWidth";
-import { fetchVotePost } from "../actions/index";
+import { fetchVotePost, fetchDeletePost } from "../actions/index";
 import { connect } from "react-redux";
 import { withStyles } from "material-ui/styles";
 import { push } from "react-router-redux";
@@ -17,7 +17,6 @@ import EditIcon from "material-ui-icons/ModeEdit";
 import DeleteIcon from "material-ui-icons/Delete";
 import ContentCard from "./ContentCard";
 import { Link } from "react-router-dom";
-import { withRouter } from "react-router-dom";
 import Typography from "material-ui/Typography";
 
 const styles = theme => ({
@@ -60,7 +59,6 @@ class PostCard extends Component {
       author,
       body,
       category,
-      deleted,
       id,
       timestamp,
       title,
@@ -107,7 +105,9 @@ class PostCard extends Component {
                     color="inherit"
                   >
                     {typeof comments !== "undefined" ? (
-                      intToString(comments.length)
+                      intToString(
+                        comments.filter(comment => !comment.deleted).length
+                      )
                     ) : (
                       "0"
                     )}
@@ -124,7 +124,10 @@ class PostCard extends Component {
           >
             {isWidthUp("sm", this.props.width) ? "EDIT" : <EditIcon />}
           </Button>
-          <Button className={this.props.classes.contentFooterButtonsContainer}>
+          <Button
+            className={this.props.classes.contentFooterButtonsContainer}
+            onClick={() => this.props.fetchDeletePost(this.props.id)}
+          >
             {isWidthUp("sm", this.props.width) ? "DELETE" : <DeleteIcon />}
           </Button>
         </div>
@@ -139,7 +142,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   setPage: page => dispatch(push(`/${page}`)),
-  votePost: (id, vote) => dispatch(fetchVotePost(id, vote))
+  votePost: (id, vote) => dispatch(fetchVotePost(id, vote)),
+  fetchDeletePost: id => dispatch(fetchDeletePost(id))
 });
 
 export default compose(

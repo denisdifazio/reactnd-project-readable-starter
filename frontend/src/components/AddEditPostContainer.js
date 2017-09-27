@@ -9,7 +9,7 @@ import { validate } from "../utils/ValidationHelper";
 import Paper from "material-ui/Paper";
 import Grid from "material-ui/Grid";
 import TextField from "material-ui/TextField";
-import { FormControl, FormHelperText } from "material-ui/Form";
+import { FormControl } from "material-ui/Form";
 import Select from "material-ui/Select";
 import Input, { InputLabel } from "material-ui/Input";
 import { MenuItem } from "material-ui/Menu";

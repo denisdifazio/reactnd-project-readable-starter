@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import withWidth, { isWidthUp } from "material-ui/utils/withWidth";
-import { fetchVoteComment } from "../actions/index";
+import {
+  fetchVoteComment,
+  fetchEditComment,
+  fetchDeleteComment
+} from "../actions/index";
 import { connect } from "react-redux";
 import { withStyles } from "material-ui/styles";
 import { push } from "react-router-redux";
@@ -10,9 +14,10 @@ import { CardContent } from "material-ui/Card";
 import Button from "material-ui/Button";
 import EditIcon from "material-ui-icons/ModeEdit";
 import DeleteIcon from "material-ui-icons/Delete";
+import CancelIcon from "material-ui-icons/Cancel";
 import ContentCard from "./ContentCard";
-import { Link } from "react-router-dom";
 import Typography from "material-ui/Typography";
+import TextField from "material-ui/TextField";
 
 const styles = theme => ({
   commentInformation: {
@@ -43,6 +48,11 @@ const styles = theme => ({
 });
 
 class CommentCard extends Component {
+  state = {
+    editing: false,
+    body: this.props.body
+  };
+
   voteUp = () => {
     this.props.voteComment(this.props.id, "upVote");
   };
@@ -51,17 +61,26 @@ class CommentCard extends Component {
     this.props.voteComment(this.props.id, "downVote");
   };
 
+  editComment = () => {
+    if (this.state.editing) {
+      const comment = {
+        timestamp: Date.now(),
+        body: this.state.body
+      };
+      this.props.fetchEditComment(this.props.id, comment);
+    }
+
+    this.setState({ editing: !this.state.editing });
+  };
+
+  handleChange = event => {
+    this.setState({
+      body: event.target.value
+    });
+  };
+
   render() {
-    const {
-      author,
-      body,
-      deleted,
-      parentDeleted,
-      id,
-      parentId,
-      timestamp,
-      voteScore
-    } = this.props;
+    const { author, body, timestamp, voteScore } = this.props;
 
     return (
       <ContentCard
@@ -82,17 +101,50 @@ class CommentCard extends Component {
             >
               {`submitted ${timeSince(timestamp)} by ${author}`}
             </Typography>
-            <Typography type="body2" className={this.props.classes.commentBody}>
-              {body}
-            </Typography>
+            {this.state.editing ? (
+              <TextField
+                id="body"
+                label="Comment"
+                multiline
+                fullWidth
+                rowsMax="10"
+                margin="normal"
+                autoFocus
+                onChange={this.handleChange}
+                value={this.state.body}
+              />
+            ) : (
+              <Typography
+                type="body2"
+                className={this.props.classes.commentBody}
+              >
+                {body}
+              </Typography>
+            )}
           </CardContent>
         )}
 
         <div className={this.props.classes.contentFooterContainer}>
-          <Button className={this.props.classes.contentFooterButtonsContainer}>
+          <Button
+            className={this.props.classes.contentFooterButtonsContainer}
+            color={this.state.editing ? "primary" : "default"}
+            raised={this.state.editing}
+            onClick={this.editComment}
+          >
             {isWidthUp("sm", this.props.width) ? "EDIT" : <EditIcon />}
           </Button>
-          <Button className={this.props.classes.contentFooterButtonsContainer}>
+          {this.state.editing && (
+            <Button
+              className={this.props.classes.contentFooterButtonsContainer}
+              onClick={() => this.setState({ editing: false })}
+            >
+              {isWidthUp("sm", this.props.width) ? "CANCEL" : <CancelIcon />}
+            </Button>
+          )}
+          <Button
+            className={this.props.classes.contentFooterButtonsContainer}
+            onClick={() => this.props.fetchDeleteComment(this.props.id)}
+          >
             {isWidthUp("sm", this.props.width) ? "DELETE" : <DeleteIcon />}
           </Button>
         </div>
@@ -107,7 +159,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   setPage: page => dispatch(push(`/${page}`)),
-  voteComment: (id, vote) => dispatch(fetchVoteComment(id, vote))
+  voteComment: (id, vote) => dispatch(fetchVoteComment(id, vote)),
+  fetchEditComment: (id, comment) => dispatch(fetchEditComment(id, comment)),
+  fetchDeleteComment: id => dispatch(fetchDeleteComment(id))
 });
 
 export default compose(

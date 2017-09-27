@@ -38,36 +38,6 @@ const postsData = (state = postsDataInitialState, action) => {
         posts: action.posts
       };
 
-    case types.VOTE_POST_RESPONSE:
-      return {
-        ...state,
-        posts: state.posts.map(
-          post =>
-            post.id === action.post.id
-              ? { ...post, voteScore: action.post.voteScore }
-              : post
-        )
-      };
-
-    case types.VOTE_COMMENT_RESPONSE:
-      return {
-        ...state,
-        posts: state.posts.map(
-          post =>
-            post.id === action.comment.parentId
-              ? {
-                  ...post,
-                  comments: post.comments.map(
-                    comment =>
-                      comment.id === action.comment.id
-                        ? { ...comment, voteScore: action.comment.voteScore }
-                        : comment
-                  )
-                }
-              : post
-        )
-      };
-
     case types.SET_POST_COMMENTS:
       return {
         ...state,
@@ -107,6 +77,27 @@ const postsData = (state = postsDataInitialState, action) => {
             post.id === action.post.id
               ? {
                   ...action.post
+                }
+              : post
+        )
+      };
+
+    case types.EDIT_COMMENT_RESPONSE:
+      return {
+        ...state,
+        posts: state.posts.map(
+          post =>
+            post.id === action.comment.parentId
+              ? {
+                  ...post,
+                  comments: post.comments.map(
+                    comment =>
+                      comment.id === action.comment.id
+                        ? {
+                            ...action.comment
+                          }
+                        : comment
+                  )
                 }
               : post
         )

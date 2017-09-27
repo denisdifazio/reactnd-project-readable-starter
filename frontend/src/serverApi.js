@@ -77,24 +77,30 @@ export const editPost = (id, post) =>
     body: JSON.stringify(post)
   }).then(res => res.json());
 
-export const update = (book, shelf) =>
-  fetch(`${api}/books/${book.id}`, {
+export const editComment = (id, comment) =>
+  fetch(`${api}/comments/${id}`, {
     method: "PUT",
     headers: {
       ...headers,
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ shelf })
+    body: JSON.stringify(comment)
   }).then(res => res.json());
 
-export const search = (query, maxResults) =>
-  fetch(`${api}/search`, {
-    method: "POST",
+export const deletePost = id =>
+  fetch(`${api}/posts/${id}`, {
+    method: "DELETE",
     headers: {
       ...headers,
       "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ query, maxResults })
-  })
-    .then(res => res.json())
-    .then(data => data.books);
+    }
+  }).then(res => res.json());
+
+export const deleteComment = id =>
+  fetch(`${api}/comments/${id}`, {
+    method: "DELETE",
+    headers: {
+      ...headers,
+      "Content-Type": "application/json"
+    }
+  }).then(res => res.json());

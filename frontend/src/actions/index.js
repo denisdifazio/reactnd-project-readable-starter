@@ -43,20 +43,6 @@ export function setPostComments(id, comments) {
   };
 }
 
-export function votePostResponse(post) {
-  return {
-    type: types.VOTE_POST_RESPONSE,
-    post
-  };
-}
-
-export function voteCommentResponse(comment) {
-  return {
-    type: types.VOTE_COMMENT_RESPONSE,
-    comment
-  };
-}
-
 export function addCommentResponse(comment) {
   return {
     type: types.ADD_COMMENT_RESPONSE,
@@ -78,6 +64,13 @@ export function editPostResponse(post) {
   };
 }
 
+export function editCommentResponse(comment) {
+  return {
+    type: types.EDIT_COMMENT_RESPONSE,
+    comment
+  };
+}
+
 export const fetchPostComments = id => dispatch =>
   ServerAPI.getPostComments(id).then(comments =>
     dispatch(setPostComments(id, comments))
@@ -91,11 +84,11 @@ export const fetchAllPosts = () => dispatch =>
     );
 
 export const fetchVotePost = (id, vote) => dispatch =>
-  ServerAPI.votePost(id, vote).then(post => dispatch(votePostResponse(post)));
+  ServerAPI.votePost(id, vote).then(post => dispatch(editPostResponse(post)));
 
 export const fetchVoteComment = (id, vote) => dispatch =>
   ServerAPI.voteComment(id, vote).then(comment =>
-    dispatch(voteCommentResponse(comment))
+    dispatch(editCommentResponse(comment))
   );
 
 export const fetchAddComment = comment => dispatch =>
@@ -114,3 +107,16 @@ export const fetchEditPost = (id, post) => dispatch =>
     .then(action =>
       dispatch(push(`/${action.post.category}/${action.post.id}`))
     );
+
+export const fetchEditComment = (id, comment) => dispatch =>
+  ServerAPI.editComment(id, comment).then(comment =>
+    dispatch(editCommentResponse(comment))
+  );
+
+export const fetchDeletePost = id => dispatch =>
+  ServerAPI.deletePost(id).then(post => dispatch(editPostResponse(post)));
+
+export const fetchDeleteComment = id => dispatch =>
+  ServerAPI.deleteComment(id).then(comment =>
+    dispatch(editCommentResponse(comment))
+  );

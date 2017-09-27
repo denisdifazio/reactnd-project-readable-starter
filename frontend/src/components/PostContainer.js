@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { compose } from "recompose";
 import { withStyles } from "material-ui/styles";
-import Grid from "material-ui/Grid";
 import PostCard from "./PostCard";
 import CommentsGrid from "./CommentsGrid";
 
@@ -12,7 +11,7 @@ const styles = {
     flexDirection: "column"
   },
   commentsContainer: {
-    paddingTop: 80
+    paddingTop: 40
   }
 };
 

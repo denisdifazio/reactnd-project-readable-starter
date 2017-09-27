@@ -21,7 +21,7 @@ const styles = {
   }
 };
 
-class InputComment extends Component {
+class CommentInput extends Component {
   state = {
     author: "",
     body: ""
@@ -106,4 +106,4 @@ const mapDispatchToProps = dispatch => ({
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   withStyles(styles)
-)(InputComment);
+)(CommentInput);
