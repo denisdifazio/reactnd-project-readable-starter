@@ -2,6 +2,13 @@ import * as types from "../actions_types/index";
 import * as ServerAPI from "../serverApi";
 import { push } from "react-router-redux";
 
+export function sortPosts(sortType) {
+  return {
+    type: types.SORT_POSTS,
+    sortType
+  };
+}
+
 export function toggleDrawer(open) {
   return {
     type: types.TOGGLE_DRAWER,

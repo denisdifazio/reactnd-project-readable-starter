@@ -17,7 +17,7 @@ const styles = {
 
 class PostContainer extends Component {
   render() {
-    return this.props.post === undefined ? (
+    return this.props.post === undefined || this.props.post.deleted ? (
       <div>Post not found</div>
     ) : (
       <div className={this.props.classes.container}>

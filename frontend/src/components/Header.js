@@ -12,6 +12,8 @@ import MenuIcon from "material-ui-icons/Menu";
 import Hidden from "material-ui/Hidden";
 import Typography from "material-ui/Typography";
 import Button from "material-ui/Button";
+import { MenuItem } from "material-ui/Menu";
+import FilterSelect from "./FilterSelect";
 
 const styles = theme => ({
   appBar: {
@@ -61,7 +63,11 @@ class Header extends Component {
           {category !== "new" &&
           category !== "edit" && (
             <div>
-              <Button color="contrast">Last 24 Hours</Button>
+              <FilterSelect>
+                <MenuItem value={"score"}>SORT BY SCORE</MenuItem>
+                <MenuItem value={"newest"}>SORT BY NEWEST</MenuItem>
+                <MenuItem value={"oldest"}>SORT BY OLDEST</MenuItem>
+              </FilterSelect>
               <Hidden mdDown>
                 <Button
                   onClick={() => this.props.setPage("new/post")}

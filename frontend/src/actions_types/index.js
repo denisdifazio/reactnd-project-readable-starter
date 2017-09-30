@@ -1,3 +1,4 @@
+export const SORT_POSTS = "SORT_POSTS";
 export const TOGGLE_DRAWER = "TOGGLE_DRAWER";
 export const SET_CATEGORIES = "SET_CATEGORIES";
 export const SET_POSTS = "SET_POSTS";

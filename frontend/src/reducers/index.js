@@ -1,6 +1,11 @@
 import { combineReducers } from "redux";
 import * as types from "../actions_types/index";
 import { routerReducer } from "react-router-redux";
+import {
+  compareByScore,
+  compareByNewest,
+  compareByOldest
+} from "../utils/SortHelper";
 
 const drawerInitialState = {
   open: false
@@ -13,6 +18,7 @@ const categoriesDataInitialState = {
 
 const postsDataInitialState = {
   isFetching: true,
+  sortType: "score",
   posts: []
 };
 
@@ -31,6 +37,27 @@ const drawer = (state = drawerInitialState, action) => {
 
 const postsData = (state = postsDataInitialState, action) => {
   switch (action.type) {
+    case types.SORT_POSTS:
+      let orderedPosts = [];
+      switch (action.sortType) {
+        case "score":
+          orderedPosts = state.posts.sort(compareByScore);
+          break;
+        case "newest":
+          orderedPosts = state.posts.sort(compareByNewest);
+          break;
+        case "oldest":
+          orderedPosts = state.posts.sort(compareByOldest);
+          break;
+        default:
+          orderedPosts = state.posts;
+      }
+      return {
+        ...state,
+        sortType: action.sortType,
+        posts: orderedPosts
+      };
+
     case types.SET_POSTS:
       return {
         ...state,

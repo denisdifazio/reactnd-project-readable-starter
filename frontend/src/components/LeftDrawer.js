@@ -9,6 +9,7 @@ import Divider from "material-ui/Divider";
 import CategoryList from "./CategoryList";
 import Typography from "material-ui/Typography";
 import { Route } from "react-router-dom";
+import Icon from "material-ui/Icon";
 
 const styles = theme => ({
   drawerPaper: {
@@ -19,6 +20,13 @@ const styles = theme => ({
     paddingLeft: 20,
     display: "flex",
     alignItems: "center"
+  },
+  logo: {
+    color: "#3F51B5"
+  },
+  logoIcon: {
+    paddingTop: 10,
+    fontSize: 21
   }
 });
 
@@ -40,8 +48,16 @@ class LeftDrawer extends Component {
         onClick={this.handleClose}
       >
         <div className={this.props.classes.drawerHeader}>
-          <Typography type="title" color="default">
-            Readable
+          <Typography type="title" className={this.props.classes.logo}>
+            R
+          </Typography>
+          <div>
+            <Icon className={this.props.classes.logoIcon} color="primary">
+              comment
+            </Icon>
+          </div>
+          <Typography type="title" className={this.props.classes.logo}>
+            adable
           </Typography>
         </div>
         <Divider />
