@@ -1,22 +1,50 @@
-# Readable API Server
+<h1 align="center">
+  <br>
+  ![Logo](./logo.svg)
+  <br>
+  <br>
+</h1>
 
-This is the starter project for the final assessment project for Udacity's Redux course where you will build a content and comment web app. Users will be able to post content to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Users will also be able to edit and delete posts and comments.
+## Table of content
+- [Introduction](#introduction)
+- [Instalation](#installation)
+- [Usage](#usage)
+    - [Posting](#posting)
+    - [Commenting](#commenting)
 
-This repository includes the code for the backend API Server that you'll use to develop and interact with the front-end portion of the project.
+- [Components](#components)
+    - [create-react-app](#create-react-app)
+    - [redux](#redux)
+    - [react-redux](#react-redux)
+    - [react-redux-router](#react-redux-router)
+    - [react-redux-dom](#react-redux-dom)
+    - [redux-thunk](#react-thunk)
+    - [redux-easy-validation](#react-easy-validation)
+    - [material-ui](#material-ui)
 
-## Start Developing
+## Introduction
 
-To get started developing right away:
+This is the second project of [Udacity's React Nanodegree](https://www.udacity.com/course/react-nanodegree--nd019) course which students were asked to build a content and comment web app.
+
+In this app, users are able to post content to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Furthermore, users are also able to edit and delete posts and comments.
+
+This repository also includes the code for the backend API Server that was used to develop and interact with the front-end portion of the project.
+
+## Instalation
 
 * Install and start the API server
     - `cd api-server`
     - `npm install`
     - `node server`
-* In another terminal window, use Create React App to scaffold out the front-end
-    - `create-react-app frontend`
+
+* Install and start the front-end
     - `cd frontend`
+    - `npm install`
     - `npm start`
 
-## API Server
+## Usage
 
-Information about the API server and how to use it can be found in its [README file](api-server/README.md).
+## Components
+
+### create-react-app
+
