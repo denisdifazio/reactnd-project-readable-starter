@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  ![Logo](./logo.svg)
+  <img src="./logo.svg" height="150">
   <br>
   <br>
 </h1>
