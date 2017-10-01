@@ -48,12 +48,16 @@ Readable was developed to be a straightforward, easy and clean interface for the
 
 Following the [philosophy of responsiveness](https://material.io/guidelines/layout/responsive-ui.html) in Material Design, Readable interface is able to adapt its layout at various screen sizes for optimal user experience.
 
-<div align="center">  
-  <img src="./images/upMedium.png">
-  <figcaption>Readable at large screen sizes</figcaption>
+<div align="center">
+  <figure>
+    <img src="./images/upMedium.png">
+    <figcaption>Readable at large screen sizes</figcaption>
+  </figure>
   <br>
-  <img src="./images/downMedium.png">
-  <figcaption>Readable at small screen sizes</figcaption>
+  <figure>
+    <img src="./images/downMedium.png">
+    <figcaption>Readable at small screen sizes</figcaption>
+  </figure>
 </div>
 
 ## Development
