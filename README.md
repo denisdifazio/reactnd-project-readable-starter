@@ -1,9 +1,9 @@
-<h1 align="center">
+<div align="center">
   <br>
-  <img src="./logo.svg" height="150">
+  <img src="./images/logo.svg" height="150">
   <br>
   <br>
-</h1>
+</div>
 
 ## Table of content
 - [Introduction](#introduction)
@@ -11,40 +11,62 @@
 - [Usage](#usage)
     - [Posting](#posting)
     - [Commenting](#commenting)
-
-- [Components](#components)
-    - [create-react-app](#create-react-app)
-    - [redux](#redux)
-    - [react-redux](#react-redux)
-    - [react-redux-router](#react-redux-router)
-    - [react-redux-dom](#react-redux-dom)
-    - [redux-thunk](#react-thunk)
-    - [redux-easy-validation](#react-easy-validation)
-    - [material-ui](#material-ui)
+- [Responsive UI](#responsive-ui)        
+- [Development](#development)
 
 ## Introduction
 
-This is the second project of [Udacity's React Nanodegree](https://www.udacity.com/course/react-nanodegree--nd019) course which students were asked to build a content and comment web app.
+Readable is the second project of [Udacity's React Nanodegree](https://www.udacity.com/course/react-nanodegree--nd019) course which students were asked to build a content and comment web app.
 
-In this app, users are able to post content to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Furthermore, users are also able to edit and delete posts and comments.
+In Readable, users are able to post content to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Furthermore, users are also able to edit and delete posts and comments.
 
 This repository also includes the code for the backend API Server that was used to develop and interact with the front-end portion of the project.
 
-## Instalation
+## Installation
 
-* Install and start the API server
+* Backend API server
     - `cd api-server`
     - `npm install`
     - `node server`
 
-* Install and start the front-end
+* Front-end UI
     - `cd frontend`
     - `npm install`
     - `npm start`
 
 ## Usage
 
-## Components
+Readable was developed to be a straightforward, easy and clean interface for the user.
 
-### create-react-app
+### Posting
+![Posting](./images/posting.gif)
+
+### Commenting
+![Commenting](./images/commenting.gif)
+
+## Responsive UI
+
+Following the [philosophy of responsiveness](https://material.io/guidelines/layout/responsive-ui.html) in Material Design, Readable interface is able to adapt its layout at various screen sizes for optimal user experience.
+
+<div align="center">  
+  <img src="./images/upMedium.png">
+  <figcaption>Readable at large screen sizes</figcaption>
+  <br>
+  <img src="./images/downMedium.png">
+  <figcaption>Readable at small screen sizes</figcaption>
+</div>
+
+## Development
+
+Readable made use of various awesome packages available in the web:
+
+- [create-react-app](https://github.com/facebookincubator/create-react-app)
+- [redux](https://github.com/reactjs/redux)
+- [react-redux](https://github.com/reactjs/react-redux)
+- [react-redux-router](https://github.com/reactjs/react-router-redux)
+- [react-router](https://github.com/ReactTraining/react-router)
+- [redux-thunk](https://github.com/gaearon/redux-thunk)
+- [react-easy-validation](https://github.com/mattp94/react-easy-validation)
+- [material-ui](https://github.com/callemall/material-ui)
+
 

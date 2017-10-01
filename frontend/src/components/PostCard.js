@@ -12,7 +12,7 @@ import {
 import { compose } from "recompose";
 import { CardHeader, CardContent } from "material-ui/Card";
 import Button from "material-ui/Button";
-import CommentIcon from "material-ui-icons/ModeComment";
+import CommentIcon from "material-ui-icons/Comment";
 import EditIcon from "material-ui-icons/ModeEdit";
 import DeleteIcon from "material-ui-icons/Delete";
 import ContentCard from "./ContentCard";
